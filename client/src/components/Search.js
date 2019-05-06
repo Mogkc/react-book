@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 class Search extends Component {
     render() {
         return (
-            <form>
+            <form onSubmit={this.props.find}>
                 <input type="text" value={this.props.value} onChange={this.props.update} />
-                <button type="submit" onClick={this.props.find} >Search</button>
+                <button type="submit">Search</button>
             </form>
         );
     }

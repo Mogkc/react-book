@@ -9,7 +9,8 @@ class SearchPage extends Component {
         searchParams: ""
     }
 
-    findBooks() {
+    findBooks(event) {
+        event.preventDefault();
         API(this.searchParams).then(results => this.setState({ booksFound: results }));
     }
 
