@@ -3,14 +3,14 @@ import BookDisplay from '../components/BookDisplay';
 import Search from '../components/Search';
 import API from '../utils/API';
 
-class Search extends Component {
+class SearchPage extends Component {
     state = {
         booksFound: [],
         searchParams: ""
     }
 
     findBooks() {
-        API(searchParams).then(results => this.setState({ booksFound: results }));
+        API(this.searchParams).then(results => this.setState({ booksFound: results }));
     }
 
     updateSearchParams(event) {
@@ -20,7 +20,7 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <Search update={this.updateSearchParams} find={this.findBooks} />
+                <Search update={() => this.updateSearchParams} find={() => this.findBooks} />
                 {this.state.booksFound.map(book =>
                     <BookDisplay key={book._id} data={book} />
                 )}
@@ -29,4 +29,4 @@ class Search extends Component {
     }
 }
 
-export default Search;
+export default SearchPage;
