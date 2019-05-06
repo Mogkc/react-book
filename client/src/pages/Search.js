@@ -11,7 +11,11 @@ class SearchPage extends Component {
 
     findBooks(event) {
         event.preventDefault();
-        API(this.searchParams).then(results => this.setState({ booksFound: results }));
+        console.log("Finding books.")
+        API.findBooks(this.state.searchParams).then(results => {
+            console.log(results);
+            this.setState({ booksFound: results.data.items })
+        });
     }
 
     updateSearchParams(event) {
@@ -21,9 +25,13 @@ class SearchPage extends Component {
     render() {
         return (
             <div>
-                <Search update={() => this.updateSearchParams} find={() => this.findBooks} />
+                <Search update={(event) => this.updateSearchParams(event)} find={(event) => this.findBooks(event)} />
                 {this.state.booksFound.map(book =>
-                    <BookDisplay key={book._id} data={book} />
+                    <BookDisplay key={book.id} 
+                    authors={book.volumeInfo.authors} title={book.volumeInfo.title}
+                    link={book.selfLink} description={book.description}
+                    img={(book.imageLinks) ? book.imageLinks.thumbnail : `https://via.placeholder.com/200` }
+                     />
                 )}
             </div>
         );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BookDisplay from '../components/BookDisplay';
-// import API from '../utils/API';
+import API from '../utils/API';
 
 class Saved extends Component {
     state = {
@@ -8,7 +8,9 @@ class Saved extends Component {
     }
 
     componentDidMount() {
-        // Call the api for saved books, then update this.state using this.setState()
+        API.getSavedBooks().then(data =>
+            this.setState({ savedBooks: data })
+        );
     }
 
     render() {
