@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Mongoose Connection
 const mongoose = require('mongoose');
-const db = require('../models/');
+const db = require('./models');
 
 mongoose
   .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/googlebooks', { useNewUrlParser: true, useCreateIndex: true })
@@ -21,23 +21,23 @@ mongoose
   .catch(err => console.error(err));
 
 // Define API routes here
-app.post("/api/books").then((req, res) => {
+app.post("/api/books", (req, res) => {
   db.Books
     .insertOne(req.body)
     .then(data => res.json(data))
     .catch(err => res.json(err));
 });
 
-app.get("/api/books").then((req, res) => {
+app.get("/api/books", (req, res) => {
   db.Books.find({})
-  .then(data => res.json(data))
-  .catch(err => res.json(err));
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
 });
 
-app.delete("/api/books/:id").then((req, res) => {
+app.delete("/api/books/:id", (req, res) => {
   db.Books
-  .findOneAndRemove({ _id: req.params.id })
-  .catch(err => res.json(err));
+    .findOneAndRemove({ _id: req.params.id })
+    .catch(err => res.json(err));
 });
 
 // Send every other request to the React app
