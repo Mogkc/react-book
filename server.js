@@ -22,15 +22,22 @@ mongoose
 
 // Define API routes here
 app.post("/api/books").then((req, res) => {
-
+  db.Books
+    .insertOne(req.body)
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
 });
 
 app.get("/api/books").then((req, res) => {
-
+  db.Books.find({})
+  .then(data => res.json(data))
+  .catch(err => res.json(err));
 });
 
-app.get("/api/books/:id").then((req, res) => {
-
+app.delete("/api/books/:id").then((req, res) => {
+  db.Books
+  .findOneAndRemove({ _id: req.params.id })
+  .catch(err => res.json(err));
 });
 
 // Send every other request to the React app
